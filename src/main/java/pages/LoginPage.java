@@ -10,10 +10,27 @@ public class LoginPage {
     WebDriver driver = DriverFactory.getDriver();
 
     // Locators
-    private By usernameField = By.name("username");
-    private By passwordField = By.name("password");
-    private By loginButton = By.cssSelector("button[type='submit']");
-    private By dashboardHeader = By.xpath("//h6[text()='Dashboard']");
+    private final By usernameField = By.name("username");
+    private final By passwordField = By.name("password");
+    private final By loginButton = By.cssSelector("button[type='submit']");
+    private final By dashboardHeader = By.xpath("//h6[text()='Dashboard']");
+
+    //Locators using FindBy annotation
+//    @FindBy(name = "username")
+//    private WebElement usernameField;
+//
+//    @FindBy(name = "password")
+//    private WebElement passwordField;
+//
+//    @FindBy(css = "button[type='submit']")
+//    private WebElement loginButton;
+//
+//    @FindBy(xpath = "//h6[text()='Dashboard']")
+//    private  WebElement dashboardHeader;
+//
+//    @FindBy(css = "p.oxd-text.oxd-alert-content-text")
+//    private WebElement errorMessage;
+
 
     // Actions
     public void openLoginPage() {
@@ -30,9 +47,13 @@ public class LoginPage {
         WebElement passField = driver.findElement(passwordField);
         passField.clear();
         passField.sendKeys(password);
-        driver.findElement(loginButton).click();
     }
 
+    public DashboardPage clickLogin() {
+        WebElement login = driver.findElement(loginButton);
+        login.click();
+        return new DashboardPage(driver);
+    }
     public void verifyDashboardPage() {
         boolean isDashboardVisible = driver.findElement(dashboardHeader).isDisplayed();
         if (!isDashboardVisible) {

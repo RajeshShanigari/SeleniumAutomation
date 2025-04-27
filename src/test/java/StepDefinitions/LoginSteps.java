@@ -1,8 +1,10 @@
 package StepDefinitions;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import pages.DashboardPage;
 import pages.LoginPage;
 import utils.ExcelUtils;
 
@@ -10,6 +12,7 @@ public class LoginSteps {
 
     LoginPage loginPage = new LoginPage();
     ExcelUtils excelUtils = new ExcelUtils();
+    private DashboardPage dashboardPage;
 
     @Given("the user navigates to the login page")
     public void the_user_navigates_to_the_login_page() {
@@ -24,6 +27,12 @@ public class LoginSteps {
         loginPage.enterUsername(username);
         loginPage.enterPassword(password);
     }
+
+    @And("user clicks the login button")
+    public void i_click_the_login_button() {
+            dashboardPage = loginPage.clickLogin();
+    }
+
     @When("the user logs in using Excel data row {int}")
     public void the_user_logs_in_using_excel_data_row(Integer rowIndex) {
         String username = excelUtils.getCellData(rowIndex, 0);
